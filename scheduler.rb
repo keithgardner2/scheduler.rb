@@ -14,7 +14,7 @@ class Scheduler
   private
 
   def self.calculate(proposed_meetings)
-    time_in_meetings, schedule = arranged_schedule(time_in_meetings, proposed_meetings)
+    time_in_meetings, schedule = arranged_schedule(proposed_meetings)
     all_offsites = proposed_meetings.select{|m|m[:type] == :onsite}.length == 0
     valid = valid_day?(time_in_meetings, all_offsites)
 
@@ -37,7 +37,7 @@ class Scheduler
     time_in_meetings <= 8
   end
 
-  def self.arranged_schedule(time_in_meetings, proposed_meetings)
+  def self.arranged_schedule(proposed_meetings)
     schedule = []
     time_in_meetings = 0
     proposed_meetings.each do |meeting|
@@ -54,7 +54,7 @@ class Scheduler
     sec = (fl * 3600).to_i
     min, sec = sec.divmod(60)
     hour, min = min.divmod(60)
-    "%02d:%02d" % [hour, min, sec]
+    "%02d:%02d" % [hour, min]
   end
 end
 
